@@ -59,7 +59,7 @@ A Node.js API for uploading, retrieving, and deleting images with image compress
 
 ## Web Demo
 
-A simple web demo is included in the `/public` folder. You can access it at http://localhost:3000 when the server is running.
+A simple web demo is included in the `/public` folder. You can access it at https://super-dooper.onrender.com/ when the server is running.
 
 The web demo includes:
 - File upload form
