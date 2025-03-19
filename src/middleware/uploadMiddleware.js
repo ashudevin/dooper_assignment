@@ -3,10 +3,16 @@ const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp');
 
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname, '../../public/uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 // Set storage engine
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, path.join(__dirname, '../../public/uploads'));
+    cb(null, uploadsDir);
   },
   filename: function(req, file, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -49,6 +55,12 @@ const compressImage = async (req, res, next) => {
   );
 
   try {
+    // Ensure the directory exists
+    const outputDir = path.dirname(outputPath);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
     // Compress image
     await sharp(inputPath)
       .resize(800) // Resize to max width 800px
