@@ -39,7 +39,7 @@ A Node.js API for uploading, retrieving, and deleting images with image compress
    ```
    npm run dev
    ```
-3. The server will start at http://localhost:3000
+3. The server will start at https://super-dooper.onrender.com
 
 ## API Endpoints
 
