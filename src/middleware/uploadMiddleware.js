@@ -55,8 +55,16 @@ const compressImage = async (req, res, next) => {
       .jpeg({ quality: 80 }) // Compress with 80% quality
       .toFile(outputPath);
 
-    // Delete original file
-    fs.unlinkSync(inputPath);
+    // Attempt to delete the original file
+    try {
+      if (fs.existsSync(inputPath)) {
+        fs.unlinkSync(inputPath);
+      }
+    } catch (err) {
+      console.error('Error deleting original file:', err);
+      // Log the error but continue processing
+      // The original file will remain, but the compressed version will still be available
+    }
 
     // Update file information
     req.file.path = outputPath;
@@ -65,7 +73,9 @@ const compressImage = async (req, res, next) => {
     
     next();
   } catch (error) {
-    next(error);
+    console.error('Error compressing image:', error);
+    // If compression fails, continue with the original file
+    next();
   }
 };
 
